@@ -1,0 +1,27 @@
+<div >
+    <app-header [title]="headerValue"></app-header>
+    <mat-card>
+    
+    <form [formGroup]="cadastroForm" >
+    <div fxLayout="row" fxLayoutGap="25px" fxLayoutAlign="center center">
+        <mat-form-field fxFlex="50">
+            <mat-select placeholder="Tipo *" formControlName="tipo">
+                <mat-option [value]="item.codigo" *ngFor="let item of projetos">{{item.nome}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex="50">
+            <input matInput placeholder="Item *" formControlName="item">
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutGap="25px">
+        <mat-form-field fxFlex="50">
+            <textarea matInput placeholder="Descrição *" formControlName="descricao"></textarea>
+        </mat-form-field>
+    </div>
+    <div class="resposive-button" fxLayoutGap="25px" fxLayout="row" fxLayoutAlign="end center">
+        <button type="submit" fxFlex="20"  
+        mat-stroked-button color="primary">Cadastrar</button>
+    </div>
+    </form>
+</mat-card>
+  </div>

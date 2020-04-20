@@ -1,0 +1,43 @@
+<div class="sidenav-container background2 "  [class.example-is-mobile]="mobileQuery.matches">
+  <mat-toolbar color="primary" class="mat-elevation-z2">
+    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+    <h1 class="example-app-name">Mim Acher</h1>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="sidenav-container background2 " 
+                         [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #snav  class="sidenav" [mode]="mobileQuery.matches ? 'over' : 'side'"
+                 [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+      <mat-nav-list>
+        <a mat-list-item [routerLink]="'/'">
+          <mat-icon mat-list-icon class="material-icons" >dashboard</mat-icon>
+          <h4 mat-line>Dashboard</h4>
+        </a>
+        <a mat-list-item [routerLink]="'/pesquisa/perdido'">
+          <mat-icon mat-list-icon class="material-icons" >search</mat-icon>
+          <h4 mat-line>Pesquisar</h4>
+        </a>
+        <a [matMenuTriggerFor]="menu" mat-list-item>
+          <mat-icon mat-list-icon class="material-icons" >add_circle</mat-icon>
+          <h4 mat-line>Cadastrar</h4>
+        </a>
+        <mat-menu #menu="matMenu" xPosition="before" >
+            <a mat-menu-item [routerLink]="'/cadastro/perdido'">
+              <mat-icon>insert_comment</mat-icon>
+              <span>Item Perdido</span>
+            </a>
+            <a mat-menu-item [routerLink]="'/cadastro/achado'">
+              <mat-icon>insert_comment_outline</mat-icon>
+              <span>Item Achado</span>
+            </a>
+          </mat-menu>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="div-router">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
