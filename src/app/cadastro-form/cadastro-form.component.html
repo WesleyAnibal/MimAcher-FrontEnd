@@ -2,12 +2,10 @@
     <app-header [title]="headerValue"></app-header>
     <mat-card>
     
-    <form [formGroup]="cadastroForm" >
+    <form [formGroup]="cadastroForm"  (ngSubmit)="submitForm(formDirective)" #formDirective="ngForm">
     <div fxLayout="row" fxLayoutGap="25px" fxLayoutAlign="center center">
         <mat-form-field fxFlex="50">
-            <mat-select placeholder="Tipo *" formControlName="tipo">
-                <mat-option [value]="item.codigo" *ngFor="let item of projetos">{{item.nome}}</mat-option>
-            </mat-select>
+            <input matInput placeholder="Item *" formControlName="tipo">
         </mat-form-field>
         <mat-form-field fxFlex="50">
             <input matInput placeholder="Item *" formControlName="item">

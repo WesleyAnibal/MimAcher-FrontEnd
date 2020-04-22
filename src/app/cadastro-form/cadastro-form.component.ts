@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, FormGroupDirective } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ItemService } from '../core/item/item.service';
 
 @Component({
   selector: 'app-cadastro-form',
@@ -24,7 +25,8 @@ export class CadastroFormComponent implements OnInit {
   alocacoes = [];
 
   constructor(private formBuilder: FormBuilder,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private itemService: ItemService) { }
 
   ngOnInit(): void {
     this.cadastroForm = new FormGroup({
@@ -34,5 +36,21 @@ export class CadastroFormComponent implements OnInit {
     });
     let length = this.route.snapshot.paramMap.get("typeCadastro")?.length;
     this.headerValue += this.route.snapshot.paramMap.get("typeCadastro")?.substring(0,1).toUpperCase() + String(this.route.snapshot.paramMap.get("typeCadastro")?.substring(1,length));
+  }
+
+  submitForm(formDirective: FormGroupDirective) {
+      this.itemService.cadatrarItem(this.cadastroForm.value).subscribe(res=>{
+        console.log(res);
+        this.getItems();
+        this.cadastroForm.reset();
+        formDirective.resetForm();
+      })
+      
+  }
+
+  getItems(){
+    this.itemService.getitens('').subscribe(res => {
+      
+    })
   }
 }

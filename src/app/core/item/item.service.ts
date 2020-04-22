@@ -13,7 +13,7 @@ export class ItemService {
     return this.http.post<any>(`${environment.apiBaseUrl}/api/item`,item);
   }
 
-  getitens(){
-    return this.http.get<any[]>(`${environment.apiBaseUrl}/api/item`);
+  getitens(texto: string){
+    return this.http.get<any[]>(`${environment.apiBaseUrl}/api/item?descricao=${texto}`);
   }
 }

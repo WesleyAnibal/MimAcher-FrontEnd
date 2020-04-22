@@ -54,6 +54,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CadastroFormComponent } from './cadastro-form/cadastro-form.component';
 import { AppHeaderComponent } from './app-header/app-header.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -113,7 +114,10 @@ import { AppHeaderComponent } from './app-header/app-header.component';
     MatTreeModule,
     PortalModule,
     ScrollingModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    HttpClientModule
+
+
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

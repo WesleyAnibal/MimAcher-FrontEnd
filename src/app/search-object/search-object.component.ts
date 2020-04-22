@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { ItemService } from '../core/item/item.service';
 
 @Component({
   selector: 'app-search-object',
@@ -9,11 +10,10 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 export class SearchObjectComponent implements OnInit {
 
   columns = [
-    { columnDef: 'tipo',  header: 'Tipo',     cell: (row: any) => `${row.name}` },
-    { columnDef: 'descricao',  header: 'Descrição',     cell: (row: any) => `${row.name}` },
-    { columnDef: 'item',  header: 'item',     cell: (row: any) => `${row.name}` },
+    { columnDef: 'tipo',  header: 'Tipo',     cell: (row: any) => `${row.tipo}` },
+    { columnDef: 'descricao',  header: 'Descrição',     cell: (row: any) => `${row.descricao}` },
   ];
-  displayedColumns: string[] = this.columns.map(x => x.columnDef);
+  displayedColumns: string[] = [...this.columns.map(x => x.columnDef), 'score'];
   projetos = [{nome: 'Beatrix', codigo: '192929'},
               {nome: 'Fusion', codigo: '192929'},
               {nome: 'Sustentação', codigo: '192929'}];
@@ -21,38 +21,39 @@ export class SearchObjectComponent implements OnInit {
 
   alocacaoForm: FormGroup;
 
-  alocacoes = [];
+  alocacoes: any[] = [];
 
   constructor(private formBuilder: FormBuilder,
+    private itemService: ItemService
               ) { }
 
   ngOnInit(): void {
     this.alocacaoForm = new FormGroup({
-      projeto: new FormControl(''),
-      recurso: new FormControl(''),
-      inicio: new FormControl(''),
-      fim: new FormControl(''),
-      data: new FormControl(''),
+      descricao: new FormControl(''),
     });
   }
 
+  updateColor(progress: any) {
+    if (progress<21){
+       return 'warn';
+    } else if (progress>80){
+       return 'primary';
+    } else {
+      return 'accent';
+    }
+ }
+
  
   createAlocacao() {
-    const ini = new Date(this.alocacaoForm.value.inicio);
-    console.log(ini.getDay());
-    this.columns = [...this.columns,
-      { columnDef: `${this.formatDayAndMonth(ini.getDate())}-${this.formatDayAndMonth(ini.getUTCMonth() + 1)}`,
-      header: `${this.formatDayAndMonth(ini.getDate())}-${this.formatDayAndMonth(ini.getUTCMonth() + 1)}`,
-      cell: (row) => `${row.name}` }];
-    console.log(this.alocacaoForm);
-    this.displayedColumns = this.columns.map(x => x.columnDef);
+    this.itemService.getitens(this.alocacaoForm.value.descricao).subscribe((res: any[]) => {
+      this.alocacoes = res;
+    })
   }
 
-  private formatDayAndMonth(value: string | number) {
-    if (value < 10) {
-      return '0' + value;
-    }
-    return value.toString();
+  getItens(){
+    this.itemService.getitens("").subscribe((res: any[]) => {
+      this.alocacoes = res;
+    })
   }
 
 }
