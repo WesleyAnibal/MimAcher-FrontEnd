@@ -34,7 +34,7 @@ export class SearchObjectComponent implements OnInit {
   }
 
   updateColor(progress: any) {
-    if (progress<21){
+    if (progress<25){
        return 'warn';
     } else if (progress>80){
        return 'primary';
